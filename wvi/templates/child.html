@@ -2,10 +2,11 @@
 
 {% block content %}
 <div class="container">
+
     {% if error %}
     <p>{{error}}</p>
     {% endif %}
-    
+
     {% if childs %}
     <table class="table table-striped table-bordered" id="tables">
         <thead>
@@ -52,4 +53,34 @@
     <p>Data not exist !</p>
     {% endif %}
 </div>
+
+<script>
+    $(document).ready(function () {
+        new DataTable('#tables', {
+            scrollX: true,
+            initComplete: function () {
+                this.api()
+                    .columns()
+                    .every(function () {
+                        let column = this;
+                        console.log(column.header());
+                        let title = column.footer().textContent;
+
+                        // Create input element
+                        let input = document.createElement('input');
+                        input.placeholder = title;
+                        column.footer().replaceChildren(input);
+
+                        // Event listener for user input
+                        input.addEventListener('keyup', () => {
+                            if (column.search() !== this.value) {
+                                column.search(input.value).draw();
+                            }
+                        });
+                    });
+            }
+        });
+
+    });
+</script>
 {% endblock %}

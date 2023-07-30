@@ -8,7 +8,7 @@ from wvi.models import *
 class ChildView():
     def view(request):
         if request.user.is_authenticated:
-            template_name = "base2.html"
+            template_name = "child.html"
             context = {
                 "childs": Child.objects.all()
             }

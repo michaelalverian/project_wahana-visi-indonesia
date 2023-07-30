@@ -1,18 +1,5 @@
 {% extends "base2.html" %}
 
-<!-- Bootstrap 5.3 CDN Link -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-
-<!-- DataTables 1.13.5 CDN Link -->
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css" />
-
-<!-- Fontawesome CDN Link -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
-<!-- Favicons -->
-<link rel="shortcut icon" href="asset/Logo/favicon.png" type="image/x-icon">
-
 {% block content %}
 <div class="container">
     <div class="row">
@@ -114,20 +101,34 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-    crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function() {
+        new DataTable('#tables', {
+            scrollX: true,
+            initComplete: function () {
+this.api()
+    .columns()
+    .every(function () {
+        let column = this;
+        console.log(column.header() );
+        let title = column.footer().textContent;
+        
+        // Create input element
+        let input = document.createElement('input');
+        input.placeholder = title;
+        column.footer().replaceChildren(input);
 
-<!-- Bootstrap 5.3 Script -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
-    integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
-    crossorigin="anonymous"></script>
+        // Event listener for user input
+        input.addEventListener('keyup', () => {
+            if (column.search() !== this.value) {
+                column.search(input.value).draw();
+            }
+        });
+    });
+    }
+        });
 
-<!-- jQuery 3.7.0 Script -->
-<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
-    crossorigin="anonymous"></script>
-
-<!-- DataTables 1.13.5 Script -->
-<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.js"></script>
+    });
+</script>
 
 {% endblock %}
