@@ -1,13 +1,6 @@
 /* ===== Google Font Import - Poformsins ===== */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
-
 .container {
     position: relative;
     max-width: 430px;
@@ -35,7 +28,7 @@
     transition: margin-left 0.18s ease;
 }
 
-.container.active .login {
+.container.active .input-kader {
     margin-left: -50%;
     opacity: 0;
     transition: margin-left 0.18s ease, opacity 0.15s ease;
@@ -168,9 +161,4 @@
 
 .button input:hover {
     background-color: #265df2;
-}
-
-.form .login-signup {
-    margin-top: 30px;
-    text-align: center;
 }

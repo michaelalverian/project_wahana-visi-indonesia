@@ -1,136 +1,106 @@
 {% extends "navbar.html" %}
 
-{% block content %}
-<!-- <h2 style="text-align:center">Form</h2>
-<form action="/kader/insert" method="post">
-    {% csrf_token %}
-    <label for="name">Name</label>
-    <input type="text" name="name" id="name" class="form-control">
-    <label for="number">Number</label>
-    <input type="text" class="form-control" name="number" id="number">
-    <label for="name">Kelurahan</label>
-    <input type="text" name="kelurahan" id="kelurahan" class="form-control">
-    <br>
-    <button type="submit" class="btn btn-success">Submit</button>
-</form>
-<hr>
-<br><br> -->
+{% load static %}
 
-<div class="card mx-auto my-5" style="width: 50%;">
-    <div class="card-header my-0"
+{% block css %}
+<link rel="stylesheet" href="{% static 'bootstrap/css/kader.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="card mx-auto my-5" style="width: 90%; max-width: 500px;">
+    <div class="card-header"
         style="background-color: rgba(249, 131, 65, 0.8); text-align: center; font-weight: bold; color: #fff; font-size: x-large;">
         Form Kader</div>
-    <div class="card-body pt-0">
+    <div class="card-body">
         <div class="forms">
-            <div class="form login">
+            <div class="form input-kader">
                 <form action="/kader/insert" method="post">
                     {% csrf_token %}
-                    <div class="input-field">
-                        <label for="name">Name</label>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
                         <input type="text" name="name" id="name" class="form-control" required>
                     </div>
-                    <div class="input-field">
-                        <label for="number">Number</label>
-                        <input type="text" class="form-control" name="number" id="number" required>
+                    <div class="mb-3">
+                        <label for="number" class="form-label">Phone Number</label>
+                        <input type="text" name="number" id="number" class="form-control" required>
                     </div>
-                    <div class="input-field">
-                        <label for="name">Kelurahan</label>
+                    <div class="mb-3">
+                        <label for="kelurahan" class="form-label">Sub-District</label>
                         <input type="text" name="kelurahan" id="kelurahan" class="form-control" required>
                     </div>
-                    <div class="input-field button">
-                        <input type="submit" value="Submit">
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-{% if kaders %}
-<table class="mx-auto">
-    <tr style="background-color: rgba(249, 131, 65, 0.8); color: #fff; text-align: center;">
-        <th>Name</th>
-        <th>Phone Number</th>
-        <th>Sub-District</th>
-        <th colspan="2">Action</th>
-    </tr>
-    {% for kader in kaders %}
-    <tr>
-        <td class="px-1 py-1"><input type="text" class="form-control" name="name" value="{{kader.name}}"></td>
-        <td class="px-1 py-1"><input type="text" class="form-control" name="number" value="{{kader.phone_number}}"></td>
-        <td class="px-1 py-1"><input type="text" class="form-control" name="kelurahan" value="{{kader.kelurahan}}"></td>
-        <td class="px-1 py-1">
-            <form action="kader/update" method="post">
-                {% csrf_token %}
-                <input type="hidden" name="kader_id" id="kader_id" value="{{kader.id}}">
-                <button type="submit" class="btn btn-secondary">Update</button>
-            </form>
-        </td>
-        <td class="px-1 py-1">
-            <form action="kader/delete" method="post">
-                {% csrf_token %}
-                <input type="hidden" name="kader_id" id="kader_id" value="{{kader.id}}">
-                <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
-        </td>
-    </tr>
-    <!-- <tr>
-        <form action="kader/update" method="post">
-            {% csrf_token %}
-            <input type="hidden" name="kader_id" id="kader_id" value="{{kader.id}}">
-            <td><input type="text" class="form-control" name="name" value="{{kader.name}}"></td>
-            <td><input type="text" class="form-control" name="number" value="{{kader.phone_number}}"></td>
-            <td><input type="text" class="form-control" name="kelurahan" value="{{kader.kelurahan}}"></td>
-            <td><button type="submit" class="btn btn-secondary">Update</button></td>
-        </form>
-        <form action="kader/delete" method="post">
-            {% csrf_token %}
-            <input type="hidden" name="kader_id" id="kader_id" value="{{kader.id}}">
-            <td><button type="submit" class="btn btn-danger">Delete</button></td>
-        </form>
-    </tr> -->
-    {% endfor %}
-</table>
 
-{% else %}
-<p style="text-align: center;">Data not exist</p>
-{% endif %}
+<div class="card mx-auto my-5" style="width: 90%; max-width: 1500px;">
+    <div class="card-header"
+        style="background-color: rgba(249, 131, 65, 0.8); text-align: center; font-weight: bold; color: #fff; font-size: x-large;">
+        Data Kader</div>
+    <div class="card-body">
+        {% if kaders %}
+        <div class="table-responsive">
+            <table id="tablesKader" class="table table-striped mt-3">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Phone Number</th>
+                        <th>Sub-District</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for kader in kaders %}
+                    <tr>
+                        <td><input type="text" class="form-control" name="name" value="{{kader.name}}"></td>
+                        <td><input type="text" class="form-control" name="number" value="{{kader.phone_number}}"></td>
+                        <td><input type="text" class="form-control" name="kelurahan" value="{{kader.kelurahan}}"></td>
+                        <td>
+                            <div class="btn-group">
+                                <form action="kader/update" method="post" style="display: inline;">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="kader_id" value="{{kader.id}}">
+                                    <button type="submit" class="btn btn-secondary">
+                                        <i class='bx bx-refresh'></i>
+                                    </button>
+                                </form>
+                                <form action="kader/delete" method="post" style="display: inline;">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="kader_id" value="{{kader.id}}">
+                                    <button type="submit" class="btn btn-danger mx-2">
+                                        <i class='bx bx-trash'></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Name</th>
+                        <th>Phone Number</th>
+                        <th>Sub-District</th>
+                        <th>Action</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        {% else %}
+        <p style="text-align: center;">Data not exist</p>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}
 
 {% block js %}
 <script>
-    const container = document.querySelector(".container"),
-        pwShowHide = document.querySelectorAll(".showHidePw"),
-        pwFields = document.querySelectorAll(".password"),
-        signUp = document.querySelector(".signup-link"),
-        login = document.querySelector(".login-link");
-
-    //   js code to show/hide password and change icon
-    pwShowHide.forEach(eyeIcon => {
-        eyeIcon.addEventListener("click", () => {
-            pwFields.forEach(pwField => {
-                if (pwField.type === "password") {
-                    pwField.type = "text";
-
-                    pwShowHide.forEach(icon => {
-                        icon.classList.replace("uil-eye-slash", "uil-eye");
-                    })
-                } else {
-                    pwField.type = "password";
-
-                    pwShowHide.forEach(icon => {
-                        icon.classList.replace("uil-eye", "uil-eye-slash");
-                    })
-                }
-            })
-        })
-    })
-
-    // js code to appear signup and login form
-    signUp.addEventListener("click", () => {
-        container.classList.add("active");
-    });
-    login.addEventListener("click", () => {
-        container.classList.remove("active");
+    $(document).ready(function () {
+        $('#tablesKader').DataTable({})
     });
 </script>
 {% endblock %}

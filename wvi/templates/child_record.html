@@ -1,41 +1,56 @@
 {% extends "navbar.html" %}
 
 {% block content %}
-<div class="container my-5">
-    <div class="row">
-        <div class="col">
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">Total Available : {{count_avail}}</li>
-                <li class="list-group-item">Total Sponsored : {{count_sponsored}}</li>
-                <li class="list-group-item">Total Hold : {{count_hold}}</li>
-                <li class="list-group-item">Total Left Program : {{count_left}}</li>
-            </ul>
-        </div>
-        <div class="col">
-            <hr>
-            <form action="/childrecord/insert_excel" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <label for="file" class="form-label">File</label>
-                <input class="form-control" type="file" name="file_excel" id="file_excel">
-                <br>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-        </div>
-        <div class="row">
-            <form action="/childrecord/update_target" method="post">
-                {% csrf_token %}
-                <label for="target">Update Target</label>
-                <input type="number" class="form-control" name="target" id="target" value="{{param}}">
-                <br>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-            <hr>
-            <br><br>
-            {% if error %}
-            <p>{{error}}</p>
-            {% endif %}
 
-            {% if child_records %}
+<div class="card mx-auto my-5" style="width: 90%; max-width: 800px;">
+    <div class="card-header"
+        style="background-color: rgba(249, 131, 65, 0.8); text-align: center; font-weight: bold; color: #fff; font-size: x-large;">
+        Upload Child Record</div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-lg-6 col-md-12 mb-3 mb-lg-0">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Total Available : {{count_avail}}</li>
+                    <li class="list-group-item">Total Sponsored : {{count_sponsored}}</li>
+                    <li class="list-group-item">Total Hold : {{count_hold}}</li>
+                    <li class="list-group-item">Total Left Program : {{count_left}}</li>
+                </ul>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <hr>
+                <form action="/childrecord/insert_excel" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <label for="file" class="form-label">File</label>
+                    <input class="form-control" type="file" name="file_excel" id="file_excel">
+                    <br>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mx-auto my-5" style="width: 90%; max-width: 1500px;">
+    <div class="card-header"
+        style="background-color: rgba(249, 131, 65, 0.8); text-align: center; font-weight: bold; color: #fff; font-size: x-large;">
+        Child Record</div>
+    <div class="card-body">
+        <form action="/childrecord/update_target" method="post" class="mb-4">
+            {% csrf_token %}
+            <label for="target">Update Target</label>
+            <input type="number" class="form-control" name="target" id="target" value="{{param}}">
+            <br>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        <hr>
+
+        {% if error %}
+        <p>{{error}}</p>
+        {% endif %}
+
+        {% if child_records %}
+        <div class="table-responsive">
             <table class="table table-striped table-bordered" id="tables">
                 <thead>
                     <tr>
@@ -64,23 +79,24 @@
                         {% endif %}
                         <td>{{child.child_id.age}}</td>
                         <td>
-                            <form action="/childrecord/update" method="post">
+                            <form action="/childrecord/update" method="post" class="d-flex">
                                 {% csrf_token %}
                                 <input type="hidden" name="childrecord_id" value="{{child.id}}">
-                                <select name="kader_id" id="kader">
+                                <select name="kader_id" id="kader" class="form-select me-2">
                                     {% for kader in kaders %}
                                     <option value="{{kader.id}}" {% if kader.id == child.kader_id.id %} selected {% endif %}>
                                         {{kader.name}} - {{kader.phone_number}}</option>
                                     {% endfor %}
                                     <option value="NULL" {% if child.kader_id is None %} selected {% endif %}></option>
                                 </select>
-                                <p></p>
-                                <button type="submit" class="btn btn-secondary">Update</button>
+                                <button type="submit" class="btn btn-secondary">
+                                    <i class='bx bx-refresh'></i>
+                                </button>
                             </form>
                         </td>
                     </tr>
                     {% endfor %}
-                </tbody>
+                </tbody>                
                 <tfoot>
                     <tr>
                         <th>Child ID</th>
@@ -94,10 +110,10 @@
                     </tr>
                 </tfoot>
             </table>
-            {% else %}
-            <p>Data not exist !</p>
-            {% endif %}
         </div>
+        {% else %}
+        <p>Data not exist!</p>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
@@ -106,7 +122,6 @@
 <script>
     $(document).ready(function () {
         new DataTable('#tables', {
-            responsive: true,
             scrollX: true,
             initComplete: function () {
                 this.api()

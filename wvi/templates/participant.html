@@ -1,76 +1,90 @@
 {% extends "navbar.html" %}
 
 {% block content %}
-<div class="container my-5">
-    <form action="/participant/insert_excel" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <label for="file">File</label>
-        <input type="file" name="file_excel" class="form-control" id="file_excel">
-        <br>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-    <hr>
-    <br><br>
-    {% if error %}
-    <p>{{error}}</p>
-    {% endif %}
+<div class="card mx-auto my-5" style="width: 90%; max-width: 500px;">
+    <div class="card-header"
+        style="background-color: rgba(249, 131, 65, 0.8); text-align: center; font-weight: bold; color: #fff; font-size: x-large;">
+        Upload Participant</div>
+    <div class="card-body">
+        <form action="/participant/insert_excel" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="file" class="form-label">File</label>
+                <input type="file" name="file_excel" class="form-control" id="file_excel">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        </form>
+    </div>
+</div>
 
-    {% if participants %}
-    <table class="table table-striped table-bordered" id="tables">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Community Name</th>
-                <th>Child ID</th>
-                <th>Child Name</th>
-                <th>Gender</th>
-                <th>Age</th>
-                <th>Child Participant</th>
-                <th>Family Participant</th>
-                <th>Child Support</th>
-                <th>Family Support</th>
-                <th>Benefit Support</th>
-                <th>Total</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for participant in participants %}
-            <tr>
-                <td>{{participant.id}}</td>
-                <td>{{participant.child_id.community}}</td>
-                <td>{{participant.child_id.id}}</td>
-                <td>{{participant.child_id.name}}</td>
-                <td>{{participant.child_id.gender}}</td>
-                <td>{{participant.child_id.age}}</td>
-                <td>{{participant.child_participation}}</td>
-                <td>{{participant.family_participation}}</td>
-                <td>{{participant.child_support}}</td>
-                <td>{{participant.family_support}}</td>
-                <td>{{participant.benefit_support}}</td>
-                <td>{{participant.total}}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-        <tfoot>
-            <tr>
-                <th>ID</th>
-                <th>Community Name</th>
-                <th>Child ID</th>
-                <th>Child Name</th>
-                <th>Gender</th>
-                <th>Age</th>
-                <th>Child Participant</th>
-                <th>Family Participant</th>
-                <th>Child Support</th>
-                <th>Family Support</th>
-                <th>Benefit Support</th>
-                <th>Total</th>
-            </tr>
-        </tfoot>
-    </table>
-    {% else %}
-    <p>Data not exist !</p>
-    {% endif %}
+<div class="card mx-auto my-5" style="width: 90%; max-width: 1500px;">
+    <div class="card-header"
+        style="background-color: rgba(249, 131, 65, 0.8); text-align: center; font-weight: bold; color: #fff; font-size: x-large;">
+        Data Participant</div>
+    <div class="card-body">
+        {% if error %}
+        <p>{{error}}</p>
+        {% endif %}
+
+        {% if participants %}
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered" id="tables">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Community Name</th>
+                        <th>Child ID</th>
+                        <th>Child Name</th>
+                        <th>Gender</th>
+                        <th>Age</th>
+                        <th>Child Participant</th>
+                        <th>Family Participant</th>
+                        <th>Child Support</th>
+                        <th>Family Support</th>
+                        <th>Benefit Support</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for participant in participants %}
+                    <tr>
+                        <td>{{participant.id}}</td>
+                        <td>{{participant.child_id.community}}</td>
+                        <td>{{participant.child_id.id}}</td>
+                        <td>{{participant.child_id.name}}</td>
+                        <td>{{participant.child_id.gender}}</td>
+                        <td>{{participant.child_id.age}}</td>
+                        <td>{{participant.child_participation}}</td>
+                        <td>{{participant.family_participation}}</td>
+                        <td>{{participant.child_support}}</td>
+                        <td>{{participant.family_support}}</td>
+                        <td>{{participant.benefit_support}}</td>
+                        <td>{{participant.total}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>ID</th>
+                        <th>Community Name</th>
+                        <th>Child ID</th>
+                        <th>Child Name</th>
+                        <th>Gender</th>
+                        <th>Age</th>
+                        <th>Child Participant</th>
+                        <th>Family Participant</th>
+                        <th>Child Support</th>
+                        <th>Family Support</th>
+                        <th>Benefit Support</th>
+                        <th>Total</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        {% else %}
+        <p>Data not exist!</p>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}
 
@@ -78,7 +92,6 @@
 <script>
     $(document).ready(function () {
         new DataTable('#tables', {
-            responsive: true,
             scrollX: true,
             initComplete: function () {
                 this.api()
