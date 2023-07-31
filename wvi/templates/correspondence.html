@@ -1,11 +1,11 @@
-{% extends "base2.html" %}
+{% extends "navbar.html" %}
 
 {% block content %}
 <div class="container">
     <form action="/correspondence/insert_excel" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <label for="file">File</label>
-        <input type="file" name="file_excel" class="form-control" id="file_excel" >
+        <input type="file" name="file_excel" class="form-control" id="file_excel">
         <br>
         <button class="btn btn-primary " type="submit">Submit</button>
     </form>
@@ -22,7 +22,7 @@
     {% if error %}
     <p>{{error}}</p>
     {% endif %}
-    
+
     {% if correspondences %}
     <table class="table table-striped table-bordered" id="tables">
         <thead>
@@ -54,20 +54,19 @@
                 <td>{{correspondence.due_date_system}}</td>
                 <td>{{correspondence.days_before_due_date_field}}</td>
                 <td>{{correspondence.days_before_due_date_system}}</td>
-                <td {% if  correspondence.days_before_due_date_system < 7 %}
-                style="background-color:red"
-                    {% elif  correspondence.days_before_due_date_system < 14 %}
-                        style="background-color:yellow"
-                    {% endif %}>{{correspondence.status}}</td>
+                <td {% if correspondence.days_before_due_date_system < 7 %} style="background-color:red" {% elif
+                    correspondence.days_before_due_date_system < 14 %} style="background-color:yellow" {% endif %}>
+                    {{correspondence.status}}</td>
                 <td>
                     <form action="/correspondence/update_kader" method="post">
                         {% csrf_token %}
                         <input type="hidden" name="correspondence_id" value="{{correspondence.id}}">
-                        <select name="kader_id" id="kader" >
+                        <select name="kader_id" id="kader">
                             {% for kader in kaders %}
-                            <option value="{{kader.id}}" {% if kader.id == correspondence.kader_id.id %} selected {% endif %}>{{kader.name}} - {{kader.phone_number}}</option>
+                            <option value="{{kader.id}}" {% if kader.id==correspondence.kader_id.id %} selected {% endif
+                                %}>{{kader.name}} - {{kader.phone_number}}</option>
                             {% endfor %}
-                            <option value="NULL" {% if  correspondence.kader_id is None %} selected {% endif %}></option>
+                            <option value="NULL" {% if correspondence.kader_id is None %} selected {% endif %}></option>
                         </select>
                         <p></p>
                         <button type="submit" class="btn btn-secondary">Update</button>
@@ -97,5 +96,36 @@
     <p>Data not exist !</p>
     {% endif %}
 </div>
+{% endblock %}
 
-{% endblock content%}
+{% block js %}
+<script>
+    $(document).ready(function () {
+        new DataTable('#tables', {
+            scrollX: true,
+            initComplete: function () {
+                this.api()
+                    .columns()
+                    .every(function () {
+                        let column = this;
+                        console.log(column.header());
+                        let title = column.footer().textContent;
+
+                        // Create input element
+                        let input = document.createElement('input');
+                        input.placeholder = title;
+                        column.footer().replaceChildren(input);
+
+                        // Event listener for user input
+                        input.addEventListener('keyup', () => {
+                            if (column.search() !== this.value) {
+                                column.search(input.value).draw();
+                            }
+                        });
+                    });
+            }
+        });
+
+    });
+</script>
+{% endblock %}

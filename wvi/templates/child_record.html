@@ -1,4 +1,4 @@
-{% extends "base2.html" %}
+{% extends "navbar.html" %}
 
 {% block content %}
 <div class="container">
@@ -100,35 +100,36 @@
         </div>
     </div>
 </div>
+{% endblock %}
 
+{% block js %}
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         new DataTable('#tables', {
             scrollX: true,
             initComplete: function () {
-this.api()
-    .columns()
-    .every(function () {
-        let column = this;
-        console.log(column.header() );
-        let title = column.footer().textContent;
-        
-        // Create input element
-        let input = document.createElement('input');
-        input.placeholder = title;
-        column.footer().replaceChildren(input);
+                this.api()
+                    .columns()
+                    .every(function () {
+                        let column = this;
+                        console.log(column.header());
+                        let title = column.footer().textContent;
 
-        // Event listener for user input
-        input.addEventListener('keyup', () => {
-            if (column.search() !== this.value) {
-                column.search(input.value).draw();
+                        // Create input element
+                        let input = document.createElement('input');
+                        input.placeholder = title;
+                        column.footer().replaceChildren(input);
+
+                        // Event listener for user input
+                        input.addEventListener('keyup', () => {
+                            if (column.search() !== this.value) {
+                                column.search(input.value).draw();
+                            }
+                        });
+                    });
             }
-        });
-    });
-    }
         });
 
     });
 </script>
-
-{% endblock %}
+{% enblock %}

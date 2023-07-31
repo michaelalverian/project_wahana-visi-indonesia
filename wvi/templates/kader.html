@@ -1,7 +1,7 @@
-{% extends "base2.html" %}
+{% extends "navbar.html" %}
 
 {% block content %}
-<h2 style="text-align:center">Form</h2>
+<!-- <h2 style="text-align:center">Form</h2>
 <form action="/kader/insert" method="post">
     {% csrf_token %}
     <label for="name">Name</label>
@@ -14,7 +14,40 @@
     <button type="submit" class="btn btn-success">Submit</button>
 </form>
 <hr>
-<br><br>
+<br><br> -->
+
+<div class="forms">
+    <div class="form login">
+        <span class="title">Login</span>
+        <form action="#">
+            <div class="input-field">
+                <input type="text" placeholder="Enter your email" required>
+                <i class="uil uil-envelope icon"></i>
+            </div>
+            <div class="input-field">
+                <input type="password" class="password" placeholder="Enter your password" required>
+                <i class="uil uil-lock icon"></i>
+                <i class="uil uil-eye-slash showHidePw"></i>
+            </div>
+            <div class="checkbox-text">
+                <div class="checkbox-content">
+                    <input type="checkbox" id="logCheck">
+                    <label for="logCheck" class="text">Remember me</label>
+                </div>
+
+                <a href="#" class="text">Forgot password?</a>
+            </div>
+            <div class="input-field button">
+                <input type="button" value="Login">
+            </div>
+        </form>
+        <div class="login-signup">
+            <span class="text">Not a member?
+                <a href="#" class="text signup-link">Signup Now</a>
+            </span>
+        </div>
+    </div>
+</div>
 {% if kaders %}
 <table>
     <tr>
@@ -25,21 +58,61 @@
     <tr>
         <form action="kader/update" method="post">
             {% csrf_token %}
-            <input type="hidden" name="kader_id" id="kader_id" value="{{kader.id}}" >
-            <td><input type="text" class="form-control" name="name"value="{{kader.name}}"></td>
-            <td><input type="text" class="form-control" name="number"value="{{kader.phone_number}}"></td>
-            <td><input type="text" class="form-control" name="kelurahan"value="{{kader.kelurahan}}"></td>
+            <input type="hidden" name="kader_id" id="kader_id" value="{{kader.id}}">
+            <td><input type="text" class="form-control" name="name" value="{{kader.name}}"></td>
+            <td><input type="text" class="form-control" name="number" value="{{kader.phone_number}}"></td>
+            <td><input type="text" class="form-control" name="kelurahan" value="{{kader.kelurahan}}"></td>
             <td><button type="submit" class="btn btn-secondary">Update</button></td>
         </form>
         <form action="kader/delete" method="post">
             {% csrf_token %}
-            <input type="hidden" name="kader_id" id="kader_id" value="{{kader.id}}" >
+            <input type="hidden" name="kader_id" id="kader_id" value="{{kader.id}}">
             <td><button type="submit" class="btn btn-danger">Delete</button></td>
         </form>
     </tr>
     {% endfor %}
 </table>
+
 {% else %}
 <p>Data not exist</p>
 {% endif %}
+{% endblock %}
+
+{% block js %}
+<script>
+    const container = document.querySelector(".container"),
+        pwShowHide = document.querySelectorAll(".showHidePw"),
+        pwFields = document.querySelectorAll(".password"),
+        signUp = document.querySelector(".signup-link"),
+        login = document.querySelector(".login-link");
+
+    //   js code to show/hide password and change icon
+    pwShowHide.forEach(eyeIcon => {
+        eyeIcon.addEventListener("click", () => {
+            pwFields.forEach(pwField => {
+                if (pwField.type === "password") {
+                    pwField.type = "text";
+
+                    pwShowHide.forEach(icon => {
+                        icon.classList.replace("uil-eye-slash", "uil-eye");
+                    })
+                } else {
+                    pwField.type = "password";
+
+                    pwShowHide.forEach(icon => {
+                        icon.classList.replace("uil-eye", "uil-eye-slash");
+                    })
+                }
+            })
+        })
+    })
+
+    // js code to appear signup and login form
+    signUp.addEventListener("click", () => {
+        container.classList.add("active");
+    });
+    login.addEventListener("click", () => {
+        container.classList.remove("active");
+    });
+</script>
 {% endblock %}
