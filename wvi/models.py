@@ -43,6 +43,6 @@ class Correspondence(models.Model):
     status = models.TextField(null=True)
 
 class Parameters(models.Model):
-    deadline_due_date_field = models.IntegerField(null=True)
-    target_child = models.IntegerField(null=True)
+    deadline_due_date_field = models.IntegerField(default=0)
+    target_child = models.IntegerField(default=0)
     

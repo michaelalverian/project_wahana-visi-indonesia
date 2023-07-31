@@ -16,7 +16,7 @@ class CorrespondenceView():
             template_name = "correspondence.html"
             for correspondence in Correspondence.objects.all():
                 correspondence.days_before_due_date_field = (correspondence.due_date_field - datetime.datetime.now().date() ).days
-                correspondence.days_before_due_date_system= (correspondence.due_date_system - datetime.datetime.now().date() ).days
+                correspondence.days_before_due_date_system = (correspondence.due_date_system - datetime.datetime.now().date() ).days
                 correspondence.save()
             context = {
                 "correspondences" : Correspondence.objects.all(),
@@ -68,6 +68,7 @@ class CorrespondenceView():
                         type = datas.loc[i, 'Correspondence Type']
                         creation_date = datetime.datetime.strptime(datas.loc[i, 'Creation Date'], '%d-%b-%Y')
                         mail_action = datas.loc[i, 'Mail Action and Route']
+                        print(Parameters.objects.get(pk=1).deadline_due_date_field)
                         due_date_field =  creation_date + datetime.timedelta(days=Parameters.objects.get(pk=1).deadline_due_date_field)
                         due_date_system = datetime.datetime.strptime(datas.loc[i, 'Due Date System'], '%d-%b-%Y')
                         days_before_due_date_field = (due_date_field - datetime.datetime.now() ).days

@@ -15,47 +15,62 @@
 </form>
 <hr>
 <br><br> -->
-
-<div class="forms">
-    <div class="form login">
-        <span class="title">Login</span>
-        <form action="#">
-            <div class="input-field">
-                <input type="text" placeholder="Enter your email" required>
-                <i class="uil uil-envelope icon"></i>
+<div class="card mx-auto my-5" style="width: 35rem;">
+    <div class="card-header my-0" style="background-color: rgba(249, 131, 65, 0.8); text-align: center; font-weight: bold; color: #fff; font-size: x-large;">Form Kader</div>
+    <div class="card-body pt-0">
+        <div class="forms">
+            <div class="form login">
+                <form action="/kader/insert" method="post">
+                    {% csrf_token %}
+                    <div class="input-field">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" id="name" class="form-control" required>
+                    </div>
+                    <div class="input-field">
+                        <label for="number">Number</label>
+                        <input type="text" class="form-control" name="number" id="number" required>
+                    </div>
+                    <div class="input-field">
+                        <label for="name">Kelurahan</label>
+                        <input type="text" name="kelurahan" id="kelurahan" class="form-control" required>
+                    </div>
+                    <div class="input-field button">
+                        <input type="submit" value="Submit">
+                    </div>
+                </form>
             </div>
-            <div class="input-field">
-                <input type="password" class="password" placeholder="Enter your password" required>
-                <i class="uil uil-lock icon"></i>
-                <i class="uil uil-eye-slash showHidePw"></i>
-            </div>
-            <div class="checkbox-text">
-                <div class="checkbox-content">
-                    <input type="checkbox" id="logCheck">
-                    <label for="logCheck" class="text">Remember me</label>
-                </div>
-
-                <a href="#" class="text">Forgot password?</a>
-            </div>
-            <div class="input-field button">
-                <input type="button" value="Login">
-            </div>
-        </form>
-        <div class="login-signup">
-            <span class="text">Not a member?
-                <a href="#" class="text signup-link">Signup Now</a>
-            </span>
         </div>
     </div>
 </div>
 {% if kaders %}
-<table>
-    <tr>
+<table class="mx-auto">
+    <tr style="background-color: rgba(249, 131, 65, 0.8); color: #fff; text-align: center;">
         <th>Name</th>
         <th>Phone Number</th>
+        <th>Sub-District</th>
+        <th colspan="2">Action</th>
     </tr>
     {% for kader in kaders %}
     <tr>
+        <td class="px-1 py-1"><input type="text" class="form-control" name="name" value="{{kader.name}}"></td>
+        <td class="px-1 py-1"><input type="text" class="form-control" name="number" value="{{kader.phone_number}}"></td>
+        <td class="px-1 py-1"><input type="text" class="form-control" name="kelurahan" value="{{kader.kelurahan}}"></td>
+        <td class="px-1 py-1">
+            <form action="kader/update" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="kader_id" id="kader_id" value="{{kader.id}}">
+                <button type="submit" class="btn btn-secondary">Update</button>
+            </form>
+        </td>
+        <td class="px-1 py-1">
+            <form action="kader/delete" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="kader_id" id="kader_id" value="{{kader.id}}">
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        </td>
+    </tr>
+    <!-- <tr>
         <form action="kader/update" method="post">
             {% csrf_token %}
             <input type="hidden" name="kader_id" id="kader_id" value="{{kader.id}}">
@@ -69,12 +84,12 @@
             <input type="hidden" name="kader_id" id="kader_id" value="{{kader.id}}">
             <td><button type="submit" class="btn btn-danger">Delete</button></td>
         </form>
-    </tr>
+    </tr> -->
     {% endfor %}
 </table>
 
 {% else %}
-<p>Data not exist</p>
+<p style="text-align: center;">Data not exist</p>
 {% endif %}
 {% endblock %}
 
