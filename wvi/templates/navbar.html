@@ -1,39 +1,57 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/child">Wahana Visi Indonesia</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
-            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="childDropdown" href="" role="button"
-                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Child
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="childDropdown">
-                        <a class="dropdown-item" href="/child">Child List</a>
-                        <a class="dropdown-item" href="/childrecord">Child Record</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/kader">Kader</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/correspondence">Correspondence</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/participant">Participant</a>
-                </li>
-            </ul>
+<nav class="navbar navbar-expand-lg" style="background-color: rgba(249, 131, 65, 0.8);">
+    <div class="logo" style="height: 10vh;">
+        <i class="bx bx-menu menu-icon" style="color: #fff;"></i>
+        <span class="logo-name" style="color: #fff;">Wahana Visi Indonesia</span>
+    </div>
+    <div class="sidebar" style="padding: 0px;">
+        <div class="logo"
+            style="background-color: rgba(249, 131, 65, 0.8); width: 100%; margin-left: 0px; height: 10vh; padding-left: 1vw;">
+            <i class="bx bx-menu menu-icon" style="color: #fff;"></i>
+            <span class="logo-name" style="font-size: 15px; color: #fff;">Wahana Visi Indonesia</span>
         </div>
-        <div class="collapse navbar-collapse justify-content-end">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout">Logout</a>
+
+        <div class="sidebar-content">
+            <ul class="lists" style="padding-left: 0;">
+                <li class="list">
+                    <a href="/child" class="nav-link">
+                        <i class="bx bx-child icon"></i>
+                        <span class="link">Child</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/childrecord" class="nav-link">
+                        <i class="bx bxs-file icon"></i>
+                        <span class="link">Child Record</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/kader" class="nav-link">
+                        <i class="bx bxs-user-rectangle icon"></i>
+                        <span class="link">Kader</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/correspondence" class="nav-link">
+                        <i class="bx bxs-envelope icon"></i>
+                        <span class="link">Correspondence</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/participant" class="nav-link">
+                        <i class="bx bxs-group icon"></i>
+                        <span class="link">Participant</span>
+                    </a>
                 </li>
             </ul>
+
+            <div class="bottom-cotent">
+                <li class="list">
+                    <a href="/logout" class="nav-link">
+                        <i class="bx bx-log-out icon"></i>
+                        <span class="link">Logout</span>
+                    </a>
+                </li>
+            </div>
         </div>
     </div>
 </nav>
