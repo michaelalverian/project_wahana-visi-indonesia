@@ -1,7 +1,7 @@
 {% extends "navbar.html" %}
 
 {% block content %}
-<div class="container">
+<div class="container my-5">
     <form action="/participant/insert_excel" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <label for="file">File</label>
@@ -78,6 +78,7 @@
 <script>
     $(document).ready(function () {
         new DataTable('#tables', {
+            responsive: true,
             scrollX: true,
             initComplete: function () {
                 this.api()

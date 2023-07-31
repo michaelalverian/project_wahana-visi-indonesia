@@ -1,7 +1,7 @@
 {% extends "navbar.html" %}
 
 {% block content %}
-<div class="container">
+<div class="container my-5">
     <div class="row">
         <div class="col">
             <ul class="list-group list-group-flush">
@@ -69,7 +69,8 @@
                                 <input type="hidden" name="childrecord_id" value="{{child.id}}">
                                 <select name="kader_id" id="kader">
                                     {% for kader in kaders %}
-                                    <option value="{{kader.id}}" {% if kader.id == child.kader_id.id %} selected {% endif %}>{{kader.name}} - {{kader.phone_number}}</option>
+                                    <option value="{{kader.id}}" {% if kader.id == child.kader_id.id %} selected {% endif %}>
+                                        {{kader.name}} - {{kader.phone_number}}</option>
                                     {% endfor %}
                                     <option value="NULL" {% if child.kader_id is None %} selected {% endif %}></option>
                                 </select>
@@ -105,6 +106,7 @@
 <script>
     $(document).ready(function () {
         new DataTable('#tables', {
+            responsive: true,
             scrollX: true,
             initComplete: function () {
                 this.api()

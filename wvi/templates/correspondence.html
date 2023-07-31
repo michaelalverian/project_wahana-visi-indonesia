@@ -1,7 +1,7 @@
 {% extends "navbar.html" %}
 
 {% block content %}
-<div class="container">
+<div class="container my-5">
     <form action="/correspondence/insert_excel" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <label for="file">File</label>
@@ -63,7 +63,8 @@
                         <input type="hidden" name="correspondence_id" value="{{correspondence.id}}">
                         <select name="kader_id" id="kader">
                             {% for kader in kaders %}
-                            <option value="{{kader.id}}" {% if kader.id == correspondence.kader_id.id %} selected {% endif %}>{{kader.name}} - {{kader.phone_number}}</option>
+                            <option value="{{kader.id}}" {% if kader.id == correspondence.kader_id.id %} selected {% endif %}>
+                                {{kader.name}} - {{kader.phone_number}}</option>
                             {% endfor %}
                             <option value="NULL" {% if correspondence.kader_id is None %} selected {% endif %}></option>
                         </select>
