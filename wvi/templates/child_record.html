@@ -18,7 +18,7 @@
             </div>
             <div class="col-lg-6 col-md-12">
                 <hr>
-                <form action="/childrecord/insert_excel" method="post" enctype="multipart/form-data">
+                <form action="{% url 'childrecord_insert_excel' %}" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <label for="file" class="form-label">File</label>
                     <input class="form-control" type="file" name="file_excel" id="file_excel">
@@ -35,7 +35,7 @@
         style="background-color: rgba(249, 131, 65, 0.8); text-align: center; font-weight: bold; color: #fff; font-size: x-large;">
         Child Record</div>
     <div class="card-body">
-        <form action="/childrecord/update_target" method="post" class="mb-4">
+        <form action="{% url 'childrecord_update_target' %}" method="post" class="mb-4">
             {% csrf_token %}
             <label for="target">Update Target</label>
             <input type="number" class="form-control" name="target" id="target" value="{{param}}">
@@ -79,7 +79,7 @@
                         {% endif %}
                         <td>{{child.child_id.age}}</td>
                         <td>
-                            <form action="/childrecord/update" method="post" class="d-flex">
+                            <form action="{% url 'childrecord_update' %}" method="post" class="d-flex">
                                 {% csrf_token %}
                                 <input type="hidden" name="childrecord_id" value="{{child.id}}">
                                 <select name="kader_id" id="kader" class="form-select me-2">

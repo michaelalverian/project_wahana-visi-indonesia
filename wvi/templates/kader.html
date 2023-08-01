@@ -14,7 +14,7 @@
     <div class="card-body">
         <div class="forms">
             <div class="form input-kader">
-                <form action="/kader/insert" method="post">
+                <form action="{% url 'kader_insert' %}" method="post">
                     {% csrf_token %}
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
@@ -61,14 +61,14 @@
                         <td><input type="text" class="form-control" name="kelurahan" value="{{kader.kelurahan}}"></td>
                         <td>
                             <div class="btn-group">
-                                <form action="kader/update" method="post" style="display: inline;">
+                                <form action="{% url 'kader_update' %}" method="post" style="display: inline;">
                                     {% csrf_token %}
                                     <input type="hidden" name="kader_id" value="{{kader.id}}">
                                     <button type="submit" class="btn btn-secondary">
                                         <i class='bx bx-refresh'></i>
                                     </button>
                                 </form>
-                                <form action="kader/delete" method="post" style="display: inline;">
+                                <form action="{% url 'kader_delete' %}" method="post" style="display: inline;">
                                     {% csrf_token %}
                                     <input type="hidden" name="kader_id" value="{{kader.id}}">
                                     <button type="submit" class="btn btn-danger mx-2">

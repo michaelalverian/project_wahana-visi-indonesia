@@ -6,7 +6,7 @@
         style="background-color: rgba(249, 131, 65, 0.8); text-align: center; font-weight: bold; color: #fff; font-size: x-large;">
         Upload Correspondence</div>
     <div class="card-body">
-        <form action="/correspondence/insert_excel" method="post" enctype="multipart/form-data">
+        <form action="{% url 'correspondence_insert_excel' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <label for="file">File</label>
             <input type="file" name="file_excel" class="form-control" id="file_excel">
@@ -16,7 +16,7 @@
 
         <hr>
 
-        <form action="/correspondence/update_due_date" method="post">
+        <form action="{% url 'correspondence_update_due_date' %}" method="post">
             {% csrf_token %}
             <label for="due_date">Update Due Date Field</label>
             <input type="number" class="form-control" name="due_date" id="due_date" value="{{param}}">
@@ -51,7 +51,6 @@
                         <th>Days Before Due Date Field</th>
                         <th>Days Before Due Date System</th>
                         <th>Status</th>
-                        <th>Kader</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -70,22 +69,6 @@
                         <td {% if correspondence.days_before_due_date_system < 7 %} style="background-color:red" {% elif
                             correspondence.days_before_due_date_system < 14 %} style="background-color:yellow" {% endif %}>
                             {{correspondence.status}}</td>
-                        <td>
-                            <form action="/correspondence/update_kader" method="post" class="d-flex">
-                                {% csrf_token %}
-                                <input type="hidden" name="correspondence_id" value="{{correspondence.id}}">
-                                <select name="kader_id" id="kader" class="form-select me-2">
-                                    {% for kader in kaders %}
-                                    <option value="{{kader.id}}" {% if kader.id == correspondence.kader_id.id %} selected {% endif %}>
-                                        {{kader.name}} - {{kader.phone_number}}</option>
-                                    {% endfor %}
-                                    <option value="NULL" {% if correspondence.kader_id is None %} selected {% endif %}></option>
-                                </select>
-                                <button type="submit" class="btn btn-secondary">
-                                    <i class='bx bx-refresh'></i>
-                                </button>
-                            </form>
-                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>                
@@ -102,7 +85,6 @@
                         <th>Days Before Due Date Field</th>
                         <th>Days Before Due Date System</th>
                         <th>Status</th>
-                        <th>Kader</th>
                     </tr>
                 </tfoot>
             </table>

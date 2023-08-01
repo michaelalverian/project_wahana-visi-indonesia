@@ -6,7 +6,7 @@
         style="background-color: rgba(249, 131, 65, 0.8); text-align: center; font-weight: bold; color: #fff; font-size: x-large;">
         Upload Participant</div>
     <div class="card-body">
-        <form action="/participant/insert_excel" method="post" enctype="multipart/form-data">
+        <form action="{% url 'participant_insert_excel' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="mb-3">
                 <label for="file" class="form-label">File</label>
