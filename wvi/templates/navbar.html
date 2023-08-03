@@ -30,7 +30,7 @@
 
 <body>
 
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg fixed-top">
         <div class="logo">
             <i class="bx bx-menu menu-icon"></i>
             <span class="logo-name">Wahana Visi Indonesia</span>
@@ -88,7 +88,9 @@
 
     <section class="overlay"></section>
 
-    {% block content %}{% endblock %}
+    <main>
+        {% block content %}{% endblock %}
+    </main>
 
     <!-- Bootstrap 5.3 Script -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
